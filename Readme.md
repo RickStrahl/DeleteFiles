@@ -1,5 +1,5 @@
 #West Wind DeleteFiles
-**A small, recursive Console File Delete Utility**
+**A small, recursive Windows Console File Delete Utility**
 * * * 
 
 This small Console utility deletes files recursively and allows filtering files by date. 

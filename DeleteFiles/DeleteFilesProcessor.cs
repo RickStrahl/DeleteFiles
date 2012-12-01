@@ -1,56 +1,23 @@
 ﻿using DeleteFiles.Properties;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.VisualBasic.FileIO;
 
 namespace DeleteFiles
 {
     public class DeleteFilesProcessor
     {
-        public string ErrorMessage { get; set; }
-
-        protected void SetError()
-        {
-            SetError(null);
-        }
-
-        protected void SetError(string message)
-        {
-            if (string.IsNullOrEmpty(message))
-            {
-                ErrorMessage = string.Empty;
-                return;
-            }
-            ErrorMessage += message;
-        }
-
-        protected void SetError(Exception ex, bool checkInner = false)
-        {
-            if (ex == null)
-                this.ErrorMessage = string.Empty;
-
-            Exception e = ex;
-            if (checkInner)
-                e = e.GetBaseException();
-
-            ErrorMessage = e.Message;
-        }
- 
 
         public bool ProcessFiles(DeleteFilesCommandLineParser parser)
         {
             if (!Directory.Exists(parser.Path))
             {
-                this.SetError(Resources.StartFolderDoesnTExist + parser.Path);
+                OnShowMessage(Resources.StartFolderDoesnTExist + parser.Path);
                 return false;
             }
-            
 
-            return ProcessFolder(parser.Path, parser);            
+            return ProcessFolder(parser.Path, parser);
         }
 
         protected bool ProcessFolder(string activeFolder, DeleteFilesCommandLineParser parser)
@@ -61,23 +28,23 @@ namespace DeleteFiles
             {
                 try
                 {
-                    if(IsFileToBeDeleted(file, parser))
+                    if (IsFileToBeDeleted(file, parser))
                     {
                         if (parser.UseRecycleBin)
-                            FileSystem.DeleteFile(file,UIOption.OnlyErrorDialogs,RecycleOption.SendToRecycleBin);
+                            FileSystem.DeleteFile(file, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
                         else
                             File.Delete(file);
 
-                        Console.WriteLine(Properties.Resources.Deleting + file);
+                        OnShowMessage(Properties.Resources.Deleting + file);
                     }
                 }
                 catch
                 {
-                    Console.WriteLine(Properties.Resources.FailedToDelete + file);
+                    OnShowMessage(Properties.Resources.FailedToDelete + file);
                     success = false;
-                }                
+                }
             }
-            
+
             if (parser.Recursive)
             {
                 var dirs = Directory.GetDirectories(activeFolder);
@@ -90,15 +57,16 @@ namespace DeleteFiles
                             try
                             {
                                 if (parser.UseRecycleBin)
-                                    FileSystem.DeleteDirectory(dir,UIOption.OnlyErrorDialogs,RecycleOption.SendToRecycleBin);
+                                    FileSystem.DeleteDirectory(dir, UIOption.OnlyErrorDialogs,
+                                                                RecycleOption.SendToRecycleBin);
                                 else
                                     Directory.Delete(dir);
 
-                                Console.WriteLine(Properties.Resources.DeletingDirectory + dir);
+                                OnShowMessage(Properties.Resources.DeletingDirectory + dir);
                             }
                             catch
                             {
-                                Console.WriteLine(Properties.Resources.FailedToDeleteDirectory + dir);
+                                OnShowMessage(Properties.Resources.FailedToDeleteDirectory + dir);
                             }
                     }
                 }
@@ -106,7 +74,7 @@ namespace DeleteFiles
 
             return success;
         }
-        
+
         /// <summary>
         /// Determines if file is to be deleted from disk
         /// 
@@ -118,18 +86,18 @@ namespace DeleteFiles
         /// <param name="file"></param>
         /// <param name="parser"></param>
         /// <returns></returns>
-        bool IsFileToBeDeleted(string file, DeleteFilesCommandLineParser parser)
+        private bool IsFileToBeDeleted(string file, DeleteFilesCommandLineParser parser)
         {
             if (parser.Seconds > -1)
             {
-                var ftime = File.GetLastWriteTimeUtc(file);                
+                var ftime = File.GetLastWriteTimeUtc(file);
                 if (DateTime.UtcNow > ftime.AddSeconds(parser.Seconds))
                     return true;
                 return false;
             }
             if (parser.Days > -1)
             {
-                var ftime = File.GetLastWriteTime(file);                
+                var ftime = File.GetLastWriteTime(file);
                 if (DateTime.Now.Date >= ftime.Date.AddDays(parser.Days))
                     return true;
                 return false;
@@ -138,5 +106,21 @@ namespace DeleteFiles
             // if neither days or seconds were provided delete all files
             return true;
         }
+
+        /// <summary>
+        /// Event that allows you to override the output that is sent 
+        /// by this class. If not set output is sent to the Console.
+        /// </summary>
+        public event Action<string> ShowMessage;
+
+        public virtual void OnShowMessage(string message)
+        {
+            if (ShowMessage != null)
+                ShowMessage(message);
+            else
+                Console.WriteLine(message);
+        }
+
     }
+
 }

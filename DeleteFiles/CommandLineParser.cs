@@ -3,128 +3,128 @@ using System.Collections.Generic;
 
 namespace Westwind.Utilities.System
 {
+/// <summary>
+/// Basic Command Line Parser class that can deal with simple
+/// switch based command line arguments
+/// 
+/// supports: FirstParm (first commandline argume
+/// -pString or -p"String"
+/// -f     switch/flag parameters
+/// </summary>
+public abstract class CommandLineParser
+{
     /// <summary>
-    /// Basic Command Line Parser class that can deal with simple
-    /// switch based command line arguments
-    /// 
-    /// supports: FirstParm (first commandline argume
-    /// -pString or -p"String"
-    /// -f     switch/flag parameters
+    /// The Command Line arguments string array
     /// </summary>
-    public abstract class CommandLineParser
+    public string[] Args {get; set;}
+
+    /// <summary>
+    /// The full command line including the executable
+    /// </summary>
+    public string CommandLine  {get; set;}
+
+    /// <summary>
+    /// The first argument (if any). Useful for a 
+    /// command/action parameter
+    /// </summary>
+    public string FirstParm  {get; set;} 
+
+    public CommandLineParser(string[] args = null,string cmdLine = null)
     {
-        /// <summary>
-        /// The Command Line arguments string array
-        /// </summary>
-        public string[] Args {get; set;}
+        if (string.IsNullOrEmpty(cmdLine))
+            CommandLine = Environment.CommandLine;
+        else
+            CommandLine = cmdLine;
 
-        /// <summary>
-        /// The full command line including the executable
-        /// </summary>
-        public string CommandLine  {get; set;}
+        if (args == null)
+            args = Environment.GetCommandLineArgs();
 
-        /// <summary>
-        /// The first argument (if any). Useful for a 
-        /// command/action parameter
-        /// </summary>
-        public string FirstParm  {get; set;} 
+        List<string> argList = new List<string>(args);
 
-        public CommandLineParser(string[] args = null,string cmdLine = null)
+        if (argList.Count > 1)
         {
-            if (string.IsNullOrEmpty(cmdLine))
-                CommandLine = Environment.CommandLine;
-            else
-                CommandLine = cmdLine;
+            FirstParm = argList[1];
 
-            if (args == null)
-                args = Environment.GetCommandLineArgs();
-
-            List<string> argList = new List<string>(args);
-
-            if (argList.Count > 1)
-            {
-                FirstParm = argList[1];
-
-                // argument array contains startup exe - remove
-                argList.RemoveAt(0);
-                Args = argList.ToArray();
-            }
-            else
-            {
-                FirstParm = string.Empty;
-                // empty array - not null to match args array
-                Args = new string[0];
-            }
+            // argument array contains startup exe - remove
+            argList.RemoveAt(0);
+            Args = argList.ToArray();
         }
-
-        /// <summary>
-        /// Override to provide parse switches\parameter
-        /// into object structure
-        /// </summary>
-        public abstract void Parse();
- 
-
-        /// <summary>
-        /// Parses a string Parameter switch in the format of:
-        /// 
-        /// -p"c:\temp files\somefile.txt"
-        /// -pc:\somefile.txt
-        /// 
-        /// Note no spaces are allowed between swich and value.
-        /// </summary>        
-        /// <param name="parm">parameter switch key</param>
-        /// <returns></returns>
-        protected string ParseStringParameterSwitch(string parm)
+        else
         {
-            int at = CommandLine.IndexOf(parm,0,StringComparison.OrdinalIgnoreCase);            
-
-            if (at > -1)
-            {
-                string rest = CommandLine.Substring(at + parm.Length);
-                
-                if (rest.StartsWith("\""))
-                {
-                    // read to end quote
-                    at = rest.IndexOf('"',2);
-                    if (at == -1)
-                        return CommandLine;
-
-                    return rest.Substring(1,at-1);
-                }
-                else if (rest == " ")
-                {
-                    // no spaces after parameters
-                    return CommandLine;
-                }
-                else
-                {
-                    // read to next space
-                    at = (rest + " ").IndexOf(' ');
-                    return rest.Substring(0, at);
-                }
-            }
-
-            return CommandLine;
-        }
-
-        protected int ParseIntParameterSwitch(string parm, int failedValue =  -1)
-        {            
-            string val = ParseStringParameterSwitch(parm);
-            int res = failedValue;
-            if (!int.TryParse(val, out res))
-                res = failedValue;
-
-            return res;
-        }
-
-        protected bool ParseParameterSwitch(string parm)
-        {
-            int at = CommandLine.IndexOf(parm,0,StringComparison.OrdinalIgnoreCase);
-
-            if (at > -1)
-                return true;
-
-            return false;
+            FirstParm = string.Empty;
+            // empty array - not null to match args array
+            Args = new string[0];
         }
     }
+
+    /// <summary>
+    /// Override to provide parse switches\parameter
+    /// into object structure
+    /// </summary>
+    public abstract void Parse();
+ 
+
+    /// <summary>
+    /// Parses a string Parameter switch in the format of:
+    /// 
+    /// -p"c:\temp files\somefile.txt"
+    /// -pc:\somefile.txt
+    /// 
+    /// Note no spaces are allowed between swich and value.
+    /// </summary>        
+    /// <param name="parm">parameter switch key</param>
+    /// <returns></returns>
+    protected string ParseStringParameterSwitch(string parm)
+    {
+        int at = CommandLine.IndexOf(parm,0,StringComparison.OrdinalIgnoreCase);            
+
+        if (at > -1)
+        {
+            string rest = CommandLine.Substring(at + parm.Length);
+                
+            if (rest.StartsWith("\""))
+            {
+                // read to end quote
+                at = rest.IndexOf('"',2);
+                if (at == -1)
+                    return CommandLine;
+
+                return rest.Substring(1,at-1);
+            }
+            else if (rest == " ")
+            {
+                // no spaces after parameters
+                return CommandLine;
+            }
+            else
+            {
+                // read to next space
+                at = (rest + " ").IndexOf(' ');
+                return rest.Substring(0, at);
+            }
+        }
+
+        return CommandLine;
+    }
+
+    protected int ParseIntParameterSwitch(string parm, int failedValue =  -1)
+    {            
+        string val = ParseStringParameterSwitch(parm);
+        int res = failedValue;
+        if (!int.TryParse(val, out res))
+            res = failedValue;
+
+        return res;
+    }
+
+    protected bool ParseParameterSwitch(string parm)
+    {
+        int at = CommandLine.IndexOf(parm,0,StringComparison.OrdinalIgnoreCase);
+
+        if (at > -1)
+            return true;
+
+        return false;
+    }
+}
 }

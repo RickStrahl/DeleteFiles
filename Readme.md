@@ -6,8 +6,8 @@ This small Console utility deletes files recursively and allows filtering files 
 
 * Allows for a filespecs in the form of c:\temp\*.*
 * Can recursive delete files and optionally delete empty folders
-* Files can be optionally dumped into the Recycle Bin
 * Date filtering based on days or seconds before current time
+* Files can be optionally dumped into the Recycle Bin
 
 ##Usage Options
 Command Line Options:
@@ -31,10 +31,10 @@ Command Line Options:
 
 	Examples:
 	---------
-	DeleteFiles c:\temp\*.* -r         - deletes all files in temp folder recursively
+	DeleteFiles c:\temp\*.* -r -f      - deletes all files in temp folder recursively
 	DeleteFiles c:\temp\*.* -r -d10    - delete files 10 days or older
 	DeleteFiles c:\temp\*.* -r -s3600  - delete files older than an hour
-	DeleteFiles "c:\My Files\*.*" -r - deletes all files in temp folder recursively
+	DeleteFiles "c:\My Files\*.*" -r   - deletes all files in temp folder recursively
 
 
 ##Requirements

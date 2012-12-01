@@ -1,47 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Westwind.Utilities.System;
-using System.IO;
+﻿using Westwind.Utilities.System;
 
 namespace DeleteFiles
 {
-    public class DeleteFilesCommandLineParser : CommandLineParser
+public class DeleteFilesCommandLineParser : CommandLineParser
+{
+    public string FullPath { get; set; }
+    public bool Recursive { get; set; }
+    public bool UseRecycleBin { get; set; }
+    public bool RemoveEmptyFolders { get; set; }
+    public int Days { get; set; }
+    public int Seconds { get; set; }
+
+    public string Path { get; set; }
+    public string FileSpec { get; set; }
+
+
+    public DeleteFilesCommandLineParser(string[] args = null,string cmdLine = null) 
+        : base(args,cmdLine)
+    {}
+
+    public override void Parse()
     {
-        public string FullPath { get; set; }
-        public bool Recursive { get; set; }
-        public bool UseRecycleBin { get; set; }
-        public bool RemoveEmptyFolders { get; set; }
-        public int Days { get; set; }
-        public int Seconds { get; set; }
-
-        public string Path { get; set; }
-        public string FileSpec { get; set; }
-
-
-        public DeleteFilesCommandLineParser(string[] args = null,string cmdLine = null) 
-            : base(args,cmdLine)
-        {}
-
-        public override void Parse()
+        // first argument is path
+        FullPath = Args[0];
+        if (!string.IsNullOrEmpty(FullPath))
         {
-            // first argument is path
-            FullPath = Args[0];
-            if (!string.IsNullOrEmpty(FullPath))
-            {
-                //FullPath = System.IO.Path.GetFullPath(FullPath);
+            //FullPath = System.IO.Path.GetFullPath(FullPath);
 
-                Path = System.IO.Path.GetDirectoryName(FullPath);
-                FileSpec = System.IO.Path.GetFileName(FullPath);
-            }
-
-            Recursive = ParseParameterSwitch("-r");
-            RemoveEmptyFolders = ParseParameterSwitch("-f");
-            UseRecycleBin = ParseParameterSwitch("-y");
-            Days = ParseIntParameterSwitch("-d",-1);
-            Seconds = ParseIntParameterSwitch("-s",-1);
+            Path = System.IO.Path.GetDirectoryName(FullPath);
+            FileSpec = System.IO.Path.GetFileName(FullPath);
         }
+
+        Recursive = ParseParameterSwitch("-r");
+        RemoveEmptyFolders = ParseParameterSwitch("-f");
+        UseRecycleBin = ParseParameterSwitch("-y");
+        Days = ParseIntParameterSwitch("-d",-1);
+        Seconds = ParseIntParameterSwitch("-s",-1);
     }
+}
 }

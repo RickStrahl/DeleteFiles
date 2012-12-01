@@ -11,7 +11,7 @@ This small Console utility deletes files recursively and allows filtering files 
 
 ##Usage Options
 Command Line Options:
-	DeleteFiles <filespec> -r -d10 -t12/1/2012
+	DeleteFiles <filespec> -r -f -y -d10 -s3600
 
 	Commands:
 	---------
@@ -20,14 +20,14 @@ Command Line Options:
 	Options:
 	--------
 	pathSpec    Path and File Spec. Make sure to add a filespec
+                 Example: c:\temp\*.*
                  (use quotes around paths that contain spaces)
-	-r          Delete files recursively     
-	-f          Remove empty Folders
-	-y          Delete to Recyle Bin (can be slow!)
-	-dXX        Number of days before the current date to delete            
-	-sXX        Number of seconds before the current time to delete
-				(seconds override days)
-				if neither -d or -s no date filter is applied
+	-r          Delete files [R]ecursively     
+	-f          Remove empty [F]olders
+	-y          Delete to Rec[Y]le Bin (can be slow!)
+	-dXX        Number of [D]ays before the current date to delete            
+	-sXX        Number of [S]econds before the current time to delete
+				 (seconds override days - if neither: no date filter)				 
 
 	Examples:
 	---------

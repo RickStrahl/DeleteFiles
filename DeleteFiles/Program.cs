@@ -19,7 +19,7 @@ namespace DeleteFiles
             {
                 string options =
                     @"
-DeleteFiles <filespec> -r -d10 -t12/1/2012
+DeleteFiles <filespec> -r -f -y -d10 -s3600
 
 Commands:
 ---------
@@ -28,20 +28,21 @@ HELP || /?      This help display
 Options:
 --------
 pathSpec    Path and File Spec. Make sure to add a filespec
--r          Delete files recursively     
--f          Remove empty Folders
--y          Delete to Recyle Bin (can be slow!)
--dXX        Number of days before the current date to delete            
--sXX        Number of seconds before the current time to delete
+-r          Delete files [R]ecursively     
+-f          Remove empty [F]olders
+-y          Delete to Rec[Y]le Bin (can be slow!)
+-dXX        Number of [D]ays before the current date to delete            
+-sXX        Number of [S]econds before the current time to delete
             (seconds override days)
             if neither -d or -s no date filter is applied
 
 Examples:
 ---------
-DeleteFiles c:\temp\*.* -r         - deletes all files in temp folder recursively
-DeleteFiles c:\temp\*.* -r -d10    - delete files 10 days or older
-DeleteFiles c:\temp\*.* -r -s3600  - delete files older than an hour
-DeleteFiles ""c:\My Files\*.*"" -r - deletes all files in temp folder recursively
+DeleteFiles c:\temp\*.* -r -f        - deletes all files in temp folder recursively 
+                                       and deletes empty folders
+DeleteFiles c:\temp\*.* -r -f -d10   - delete files 10 days or older 
+DeleteFiles c:\temp\*.* -r -f -s3600 - delete files older than an hour
+DeleteFiles ""c:\My Files\*.*"" -r   - deletes all files in temp folder recursively
 
 ";
 

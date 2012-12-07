@@ -121,4 +121,8 @@
     <value>Error: </value>
     <comment>Error description</comment>
   </data>
+  <data name="ErrorOpening" xml:space="preserve">
+    <value>Error opening: </value>
+    <comment>ErrorOpening description</comment>
+  </data>
 </root>

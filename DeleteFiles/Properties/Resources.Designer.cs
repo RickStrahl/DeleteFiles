@@ -88,6 +88,15 @@ namespace DeleteFiles.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error opening: .
+        /// </summary>
+        internal static string ErrorOpening {
+            get {
+                return ResourceManager.GetString("ErrorOpening", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to delete .
         /// </summary>
         internal static string FailedToDelete {

@@ -22,7 +22,17 @@ namespace DeleteFiles
 
         protected bool ProcessFolder(string activeFolder, DeleteFilesCommandLineParser parser)
         {
-            var files = Directory.GetFiles(activeFolder, parser.FileSpec);
+            string[] files;
+
+            try
+            {
+                files = Directory.GetFiles(activeFolder, parser.FileSpec);
+            }
+            catch (Exception e)
+            {
+                OnShowMessage(Resources.ErrorOpening + activeFolder + ". " + e.GetBaseException().Message);
+                return false;
+            }
             bool success = true;
             foreach (var file in files)
             {
@@ -35,12 +45,12 @@ namespace DeleteFiles
                         else
                             File.Delete(file);
 
-                        OnShowMessage(Properties.Resources.Deleting + file);
+                        OnShowMessage(Resources.Deleting + file);
                     }
                 }
                 catch
                 {
-                    OnShowMessage(Properties.Resources.FailedToDelete + file);
+                    OnShowMessage(Resources.FailedToDelete + file);
                     success = false;
                 }
             }
@@ -51,9 +61,9 @@ namespace DeleteFiles
                 foreach (var dir in dirs)
                 {
                     success = ProcessFolder(dir, parser);
-                    if (success)
+                    if (success && parser.RemoveEmptyFolders)
                     {
-                        if (Directory.GetFiles(dir).Count() == 0 && Directory.GetDirectories(dir).Count() == 0)
+                        if (!Directory.GetFiles(dir).Any() && !Directory.GetDirectories(dir).Any())
                             try
                             {
                                 if (parser.UseRecycleBin)
@@ -62,11 +72,11 @@ namespace DeleteFiles
                                 else
                                     Directory.Delete(dir);
 
-                                OnShowMessage(Properties.Resources.DeletingDirectory + dir);
+                                OnShowMessage(Resources.DeletingDirectory + dir);
                             }
                             catch
                             {
-                                OnShowMessage(Properties.Resources.FailedToDeleteDirectory + dir);
+                                OnShowMessage(Resources.FailedToDeleteDirectory + dir);
                             }
                     }
                 }

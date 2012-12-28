@@ -6,6 +6,7 @@ public class DeleteFilesCommandLineParser : CommandLineParser
 {
     public string FullPath { get; set; }
     public bool Recursive { get; set; }
+    public bool DisplayOnly { get; set; }
     public bool UseRecycleBin { get; set; }
     public bool RemoveEmptyFolders { get; set; }
     public int Days { get; set; }
@@ -31,6 +32,7 @@ public class DeleteFilesCommandLineParser : CommandLineParser
             FileSpec = System.IO.Path.GetFileName(FullPath);
         }
 
+        DisplayOnly = ParseParameterSwitch("-l");
         Recursive = ParseParameterSwitch("-r");
         RemoveEmptyFolders = ParseParameterSwitch("-f");
         UseRecycleBin = ParseParameterSwitch("-y");

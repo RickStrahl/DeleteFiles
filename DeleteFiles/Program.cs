@@ -14,7 +14,7 @@ internal class Program
         {
             string options =
                 @"
-DeleteFiles <filespec> -r -f -y -d10 -s3600
+DeleteFiles <filespec> -r -f -y -l -d10 -s3600
 
 Commands:
 ---------
@@ -26,6 +26,7 @@ pathSpec    Path and File Spec. Make sure to add a filespec
 -r          Delete files [R]ecursively     
 -f          Remove empty [F]olders
 -y          Delete to Rec[Y]le Bin (can be slow!)
+-l          Disp[L]ays items that would be deleted
 -dXX        Number of [D]ays before the current date to delete            
 -sXX        Number of [S]econds before the current time to delete
         (seconds override days)
@@ -48,6 +49,9 @@ DeleteFiles ""c:\My Files\*.*"" -r   - deletes all files in temp folder recursiv
 
         DeleteFilesCommandLineParser cmdLine = new DeleteFilesCommandLineParser();
         cmdLine.Parse();
+
+        if (cmdLine.DisplayOnly)
+            Console.WriteLine(DeleteFiles.Properties.Resources.DisplayOnlyModeNoFilesFoldersAreDeletedRN);
 
         DeleteFilesProcessor del = new DeleteFilesProcessor();
         del.ProcessFiles(cmdLine);

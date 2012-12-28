@@ -79,6 +79,16 @@ namespace DeleteFiles.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Display only mode - no files/folders are deleted.
+        ///.
+        /// </summary>
+        internal static string DisplayOnlyModeNoFilesFoldersAreDeletedRN {
+            get {
+                return ResourceManager.GetString("DisplayOnlyModeNoFilesFoldersAreDeletedRN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error: .
         /// </summary>
         internal static string Error {

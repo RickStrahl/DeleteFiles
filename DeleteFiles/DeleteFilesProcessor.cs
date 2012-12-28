@@ -40,11 +40,13 @@ namespace DeleteFiles
                 {
                     if (IsFileToBeDeleted(file, parser))
                     {
-                        if (parser.UseRecycleBin)
-                            FileSystem.DeleteFile(file, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
-                        else
-                            File.Delete(file);
-
+                        if (!parser.DisplayOnly)
+                        {
+                            if (parser.UseRecycleBin)
+                                FileSystem.DeleteFile(file, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+                            else
+                                File.Delete(file);
+                        }
                         OnShowMessage(Resources.Deleting + file);
                     }
                 }
@@ -66,12 +68,14 @@ namespace DeleteFiles
                         if (!Directory.GetFiles(dir).Any() && !Directory.GetDirectories(dir).Any())
                             try
                             {
-                                if (parser.UseRecycleBin)
-                                    FileSystem.DeleteDirectory(dir, UIOption.OnlyErrorDialogs,
-                                                                RecycleOption.SendToRecycleBin);
-                                else
-                                    Directory.Delete(dir);
-
+                                if (!parser.DisplayOnly)
+                                {
+                                    if (parser.UseRecycleBin)
+                                        FileSystem.DeleteDirectory(dir, UIOption.OnlyErrorDialogs,
+                                                                    RecycleOption.SendToRecycleBin);
+                                    else
+                                        Directory.Delete(dir);
+                                }
                                 OnShowMessage(Resources.DeletingDirectory + dir);
                             }
                             catch

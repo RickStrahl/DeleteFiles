@@ -22,7 +22,7 @@ HELP || /?      This help display
 
 Options:
 --------
-pathSpec    Path and File Spec. Make sure to add a filespec
+pathSpec    FilePath and File Spec. Make sure to add a filespec
 -r          Delete files [R]ecursively     
 -f          Remove empty [F]olders
 -y          Delete to Rec[Y]le Bin (can be slow!)
@@ -35,7 +35,7 @@ pathSpec    Path and File Spec. Make sure to add a filespec
 Examples:
 ---------
 DeleteFiles c:\temp\*.* -r -f        - deletes all files in temp folder recursively 
-                                    and deletes empty folders
+                                       and deletes empty folders
 DeleteFiles c:\temp\*.* -r -f -d10   - delete files 10 days or older 
 DeleteFiles c:\temp\*.* -r -f -s3600 - delete files older than an hour
 DeleteFiles ""c:\My Files\*.*"" -r   - deletes all files in temp folder recursively

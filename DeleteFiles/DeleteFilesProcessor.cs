@@ -11,13 +11,13 @@ namespace DeleteFiles
 
         public bool ProcessFiles(DeleteFilesCommandLineParser parser)
         {
-            if (!Directory.Exists(parser.Path))
+            if (!Directory.Exists(parser.FilePath))
             {
-                OnShowMessage(Resources.StartFolderDoesnTExist + parser.Path);
+                OnShowMessage(Resources.StartFolderDoesnTExist + parser.FilePath);
                 return false;
             }
 
-            return ProcessFolder(parser.Path, parser);
+            return ProcessFolder(parser.FilePath, parser);
         }
 
         protected bool ProcessFolder(string activeFolder, DeleteFilesCommandLineParser parser)

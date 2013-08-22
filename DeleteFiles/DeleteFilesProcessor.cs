@@ -9,15 +9,37 @@ namespace DeleteFiles
     public class DeleteFilesProcessor
     {
 
+        public int FileCount { get; set; }
+        public int FolderCount { get; set; }
+        public int LockedFileCount { get; set; }
+
         public bool ProcessFiles(DeleteFilesCommandLineParser parser)
         {
+            FileCount = 0;
+            FolderCount = 0;
+            LockedFileCount = 0;            
+
             if (!Directory.Exists(parser.FilePath))
             {
                 OnShowMessage(Resources.StartFolderDoesnTExist + parser.FilePath);
                 return false;
             }
 
-            return ProcessFolder(parser.FilePath, parser);
+            bool result = ProcessFolder(parser.FilePath, parser);
+
+            OnShowMessage("\r\n\r\nSummary:");
+
+            if (FileCount == 0 && LockedFileCount == 0)
+                OnShowMessage("  No files found to delete.");
+
+            if (FileCount > 0)
+                OnShowMessage(string.Format("  {0} files deleted.",FileCount));
+            if (FolderCount > 0)
+                OnShowMessage(string.Format("  {0} folders deleted.",FolderCount));
+            if (LockedFileCount > 0)
+                OnShowMessage(string.Format("  {0} locked files not deleted.", LockedFileCount));
+
+            return result;
         }
 
         protected bool ProcessFolder(string activeFolder, DeleteFilesCommandLineParser parser)
@@ -48,11 +70,13 @@ namespace DeleteFiles
                                 File.Delete(file);
                         }
                         OnShowMessage(Resources.Deleting + file);
+                        FileCount++;                 
                     }
                 }
                 catch
-                {
+                {                    
                     OnShowMessage(Resources.FailedToDelete + file);
+                    LockedFileCount++; 
                     success = false;
                 }
             }
@@ -76,10 +100,11 @@ namespace DeleteFiles
                                     else
                                         Directory.Delete(dir);
                                 }
+                                FolderCount++;
                                 OnShowMessage(Resources.DeletingDirectory + dir);
                             }
                             catch
-                            {
+                            {                                
                                 OnShowMessage(Resources.FailedToDeleteDirectory + dir);
                             }
                     }
@@ -134,7 +159,6 @@ namespace DeleteFiles
             else
                 Console.WriteLine(message);
         }
-
     }
 
 }

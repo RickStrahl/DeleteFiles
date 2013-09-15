@@ -10,6 +10,7 @@ namespace DeleteFiles
     {
 
         public int FileCount { get; set; }
+        public long FileSizeCount { get; set; }
         public int FolderCount { get; set; }
         public int LockedFileCount { get; set; }
 
@@ -17,7 +18,8 @@ namespace DeleteFiles
         {
             FileCount = 0;
             FolderCount = 0;
-            LockedFileCount = 0;            
+            LockedFileCount = 0;
+            LockedFileCount = 0;
 
             if (!Directory.Exists(parser.FilePath))
             {
@@ -33,7 +35,17 @@ namespace DeleteFiles
                 OnShowMessage("  No files found to delete.");
 
             if (FileCount > 0)
-                OnShowMessage(string.Format("  {0} files deleted.",FileCount));
+            {
+                string size;
+                if (FileSizeCount < 1000)
+                    size = FileSizeCount.ToString("N0") + " bytes";
+                else if (FileSizeCount < 1000000)
+                    size = (FileSizeCount/1000).ToString("N2") + "kb";
+                else
+                    size = ((decimal) FileSizeCount/1000000M).ToString("N2") + "mb";
+
+                OnShowMessage(string.Format("  {0} files and {1} deleted.", FileCount, size));
+            }
             if (FolderCount > 0)
                 OnShowMessage(string.Format("  {0} folders deleted.",FolderCount));
             if (LockedFileCount > 0)
@@ -58,6 +70,10 @@ namespace DeleteFiles
             bool success = true;
             foreach (var file in files)
             {
+                var fi = new FileInfo(file);
+                if (!fi.Exists)
+                    continue;
+                
                 try
                 {
                     if (IsFileToBeDeleted(file, parser))
@@ -70,7 +86,8 @@ namespace DeleteFiles
                                 File.Delete(file);
                         }
                         OnShowMessage(Resources.Deleting + file);
-                        FileCount++;                 
+                        FileCount++;
+                        FileSizeCount += fi.Length;
                     }
                 }
                 catch

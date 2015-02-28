@@ -12,7 +12,7 @@ namespace DeleteFiles
     {
 
         public int FileCount { get; set; }
-        public long FileSizeCount { get; set; }
+        public ulong FileSizeCount { get; set; }
         public int FolderCount { get; set; }
         public int LockedFileCount { get; set; }
 
@@ -86,21 +86,35 @@ namespace DeleteFiles
                 {
                     if (IsFileToBeDeleted(fi.Name, parser))
                     {
+                        ulong fsize = fi.Length;
+
                         if (!parser.DisplayOnly)
                         {
-
-                            
-                            if (parser.UseRecycleBin)                                
+                            if (parser.UseRecycleBin)
                                 FileSystem.DeleteFile(file, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
                             else
-                                fi.Delete(); 
+                                try
+                                {
+                                    File.Delete(fi.FullName);
+                                }                            
+                                catch (PathTooLongException ex)
+                                {
+                                    // try again with long path routines
+                                    fi.Delete();
+                                }
+                                catch (UnauthorizedAccessException ex)
+                                {
+                                    fi.Attributes =  ZetaLongPaths.Native.FileAttributes.Normal;
+                                    fi.Delete();
+                                }                            
                         }
                         OnShowMessage(Resources.Deleting + file);
                         FileCount++;
-                        FileSizeCount += (long) fi.Length;
+                        
+                        FileSizeCount += fsize;
                     }
                 }
-                catch
+                catch(Exception ex)
                 {                    
                     OnShowMessage(Resources.FailedToDelete + file);
                     LockedFileCount++; 
@@ -126,9 +140,26 @@ namespace DeleteFiles
                                 {
                                     if (parser.UseRecycleBin)
                                         FileSystem.DeleteDirectory(dir, UIOption.OnlyErrorDialogs,
-                                                                    RecycleOption.SendToRecycleBin);
+                                            RecycleOption.SendToRecycleBin);
                                     else
-                                        directory.Delete(false);
+                                    {
+                                        try
+                                        {
+                                            Directory.Delete(directory.FullName);
+                                        }
+                                        catch (PathTooLongException ex)
+                                        {
+                                            directory.Delete(false);
+                                        }
+                                        catch (UnauthorizedAccessException ex)
+                                        {
+                                            if (parser.DeleteReadOnly)
+                                            {
+                                                directory.Attributes = ZetaLongPaths.Native.FileAttributes.Normal;
+                                                directory.Delete(false);
+                                            }
+                                        }
+                                    }
                                 }
                                 FolderCount++;
                                 OnShowMessage(Resources.DeletingDirectory + dir);

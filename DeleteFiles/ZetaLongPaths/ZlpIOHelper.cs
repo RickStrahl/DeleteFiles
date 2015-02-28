@@ -687,7 +687,7 @@
 			{
 				try
 				{
-					if (result.ToInt32() == PInvokeHelper.ERROR_FILE_NOT_FOUND)
+					if (result.ToInt64() == PInvokeHelper.ERROR_FILE_NOT_FOUND)
 					{
 						return DateTime.MinValue;
 					}
@@ -722,7 +722,7 @@
 			{
 				try
 				{
-					if (result.ToInt32() == PInvokeHelper.ERROR_FILE_NOT_FOUND)
+					if (result.ToInt64() == PInvokeHelper.ERROR_FILE_NOT_FOUND)
 					{
 						return DateTime.MinValue;
 					}
@@ -757,7 +757,7 @@
 			{
 				try
 				{
-					if (result.ToInt32() == PInvokeHelper.ERROR_FILE_NOT_FOUND)
+					if (result.ToInt64() == PInvokeHelper.ERROR_FILE_NOT_FOUND)
 					{
 						return DateTime.MinValue;
 					}
@@ -950,23 +950,28 @@
 			}
 			else
 			{
-				try
-				{
-					if (result.ToInt32() == PInvokeHelper.ERROR_FILE_NOT_FOUND)
-					{
-						return 0;
-					}
-					else
-					{
-						var low = fd.nFileSizeLow;
-						var high = fd.nFileSizeHigh;
+			    try
+			    {
+			        if (result.ToInt64() == PInvokeHelper.ERROR_FILE_NOT_FOUND)
+			        {
+			            return 0;
+			        }
+			        else
+			        {
+			            var low = fd.nFileSizeLow;
+			            var high = fd.nFileSizeHigh;
 
-						//return (high * (0xffffffff + 1)) + low;
-						//return (((ulong)high) << 32) + low;
-						var l = ((high << 0x20) | (low & 0xffffffffL)); // Copied from FileInfo.Length via Reflector.NET.
-						return (ulong)l;
-					}
-				}
+			            //return (high * (0xffffffff + 1)) + low;
+			            //return (((ulong)high) << 32) + low;
+			            var l = ((high << 0x20) | (low & 0xffffffffL)); // Copied from FileInfo.Length via Reflector.NET.
+			            return (ulong) l;
+			        }
+			    }
+			    catch (Exception ex)
+			    {
+			        var msg = ex.Message;
+			        return 0;
+			    }
 				finally
 				{
 					PInvokeHelper.FindClose(result);

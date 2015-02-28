@@ -11,6 +11,7 @@ namespace DeleteFiles
         public bool DisplayOnly { get; set; }
         public bool UseRecycleBin { get; set; }
         public bool RemoveEmptyFolders { get; set; }
+        public bool DeleteReadOnly { get; set; }
         public int Days { get; set; }
         public int Seconds { get; set; }
 
@@ -38,6 +39,7 @@ namespace DeleteFiles
             Recursive = ParseParameterSwitch("-r");
             RemoveEmptyFolders = ParseParameterSwitch("-f");
             UseRecycleBin = ParseParameterSwitch("-y");
+            DeleteReadOnly = true;
             Days = ParseIntParameterSwitch("-d", -1);
             Seconds = ParseIntParameterSwitch("-s", -1);
         }

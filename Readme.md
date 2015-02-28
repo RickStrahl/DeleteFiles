@@ -8,6 +8,7 @@ This small Console utility deletes files recursively and allows filtering files 
 * Can recursive delete files and optionally delete empty folders
 * Date filtering based on days or seconds before current time
 * Files can be optionally dumped into the Recycle Bin
+* Works on long paths like NPM folders 
 
 ##Usage Options
 Command Line Options:

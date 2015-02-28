@@ -1,63 +1,76 @@
-#West Wind DeleteFiles
+# West Wind DeleteFiles
 **A small, recursive Windows Console File Delete Utility**
-* * * 
 
-This small Console utility deletes files recursively and allows filtering files by date. 
+This small Console utility deletes files recursively and allows filtering files by date.
 
 * Allows for a filespecs in the form of c:\temp\*.*
 * Can recursive delete files and optionally delete empty folders
 * Date filtering based on days or seconds before current time
 * Files can be optionally dumped into the Recycle Bin
-* Works on long paths like NPM folders 
+* Works on deeply nested paths working around Windows MAX_PATH limitations
 
-##Usage Options
+## Usage Options
 Command Line Options:
-	DeleteFiles <filespec> -r -f -l -y -d10 -s3600
+	DeleteFiles <filespec>
+    -r -f -l -y -d10 -s3600
 
-	Commands:
-	---------
-	HELP || /?  This help display           
+    Commands:
+    ---------
+    HELP || /?  This help display
 
-	Options:
-	--------
-	pathSpec    Path and File Spec. Make sure to add a filespec
-                 Example: c:\temp\*.*
-                 (use quotes around paths that contain spaces)
-	-r          Delete files [R]ecursively     
-	-f          Remove empty [F]olders
-	-l          Disp[L]ay items that would be deleted
-	-y          Delete to Rec[Y]le Bin (can be slow!)
-	-dXX        Number of [D]ays before the current date to delete            
-	-sXX        Number of [S]econds before the current time to delete
-				 (seconds override days - if neither: no date filter)				 
+    Options:
+    --------
+    pathSpec    Path and File Spec. Make sure to add a filespec
+    Example: c:\temp\*.*
+    (use quotes around paths that contain spaces)
+    -r          Delete files [R]ecursively
+    -f          Remove empty [F]olders
+    -l          Disp[L]ay items that would be deleted
+    -y          Delete to Rec[Y]le Bin (can be slow!)
+    -dXX        Number of [D]ays before the current date to delete
+    -sXX        Number of [S]econds before the current time to delete
+    (seconds override days - if neither: no date filter)
 
-	Examples:
-	---------
-	DeleteFiles c:\temp\*.* -r -f      - deletes all files in temp folder recursively
-	DeleteFiles c:\temp\*.* -r -d10    - delete files 10 days or older
-	DeleteFiles c:\temp\*.* -r -s3600  - delete files older than an hour
-	DeleteFiles "c:\My Files\*.*" -r   - deletes all files in temp folder recursively
+    Examples:
+    ---------
+    DeleteFiles c:\temp\*.* -r -f      - deletes all files in temp folder recursively
+    DeleteFiles c:\temp\*.* -r -d10    - delete files 10 days or older
+    DeleteFiles c:\temp\*.* -r -s3600  - delete files older than an hour
+    DeleteFiles "c:\My Files\*.*" -r   - deletes all files in temp folder recursively
 
 
-##Requirements
-[Requires the .NET Framework 4.0](http://www.microsoft.com/en-us/download/details.aspx?id=17851)
+## Requirements
+* [Requires the .NET Framework 4.0]
+* (http://www.microsoft.com/en-us/download/details.aspx?id=17851)
 
-##License
+## Acknowledgement
+* Uses [ZetaLongPath](http://zetalongpaths.codeplex.com) by Zeta GMBH for long path deletion
+
+## License
+Copyright Â© 2012-2015 Rick Strahl, West Wind Technologies<br/>
+[http://weblog.west-wind.com/](http://weblog.west-wind.com/)
+
+This utility is provided as is, free of charge under MIT licence, and is provided without warranty. You can use it as you see fit with no limitations and the source code provided can be modified as needed. If you make changes or fixes please put in a pull request or open an issue to get any changes added.
+
+If you're feeling generous and you find this tool useful consider making a small donation:
+
+* [Make a donation for DeleteFiles using PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3CY6HGRTHSV5Y)
+
+
 This tool is published under MIT license terms:
 
-Copyright © 2012 Rick Strahl, West Wind Technologies, http://west-wind.com/
-
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
-associated documentation files (the "Software"), to deal in the Software without restriction, 
-including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+associated documentation files (the "Software"), to deal in the Software without restriction,
+including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
 and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
 subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all copies or substantial 
+The above copyright notice and this permission notice shall be included in all copies or substantial
 portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, 
-INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND 
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
 NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+

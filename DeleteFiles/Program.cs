@@ -10,8 +10,7 @@ namespace DeleteFiles
             Version v = Assembly.GetExecutingAssembly().GetName().Version;
             string version = v.Major + "." + v.Minor;
 
-            Console.WriteLine("West Wind DeleteFiles v{0}\r\n" +
-                              "(c) West Wind Technologies - www.west-wind.com\r\n", version);
+            Console.WriteLine("West Wind DeleteFiles [Version {0}]\r\n", version);
 
             if (args == null || args.Length == 0 || args[0] == "HELP" || args[0] == "/?")
             {
@@ -41,9 +40,9 @@ Examples:
 ---------
 DeleteFiles c:\temp\*.* -r -f        - deletes all files in temp folder recursively 
                                        and deletes empty folders
+DeleteFiles ""c:\My Files\*.*"" -r   - deletes all files leaves folders
 DeleteFiles c:\temp\*.* -r -f -d10   - delete files 10 days or older 
 DeleteFiles c:\temp\*.* -r -f -s3600 - delete files older than an hour
-DeleteFiles ""c:\My Files\*.*"" -r   - deletes all files in temp folder recursively
 
 ";
 

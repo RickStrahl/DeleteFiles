@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+    <metadata>
+        <id>DeleteFiles</id>
+        <version>1.10</version>
+        <title>West Wind DeleteFiles</title>
+        <authors>Rick Strahl,West Wind Technologies</authors>
+        <owners>West Wind Technologies</owners>
+        <licenseUrl>https://github.com/RickStrahl/DeleteFiles#license</licenseUrl>
+        <projectUrl>https://github.com/RickStrahl/DeleteFiles</projectUrl>
+        <iconUrl>http://websurge.west-wind.com/images/WebSurgeLogo128.png</iconUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>
+		DeleteFiles is a small Windows command line utility that deletes nested file and folder hierarchies recursively and has support for deeply nested folder structures that typically make Windows Explorer choke (like deep NPM hierarchies). You can also optionally specify a time out for files to be deleted so you can delete files that are say 7 days old. Files can be hard deleted or sent to the recycle bin.
+		</description>
+        <summary>A recursive file and folder deletion command line utility, that supports deeply nested folder structures and timed deletions.</summary>
+        <releaseNotes>This release adds support for paths longer than MAX_PATH to allow deleting any kind of nested structure.</releaseNotes>
+        <copyright>West Wind Technologies, 2014-2015</copyright>
+        <tags>Delete-Files,Delete,Windows,Command-Line</tags>
+    </metadata>
+    <files>
+        <file src="tools\chocolateyInstall.ps1" target="tools\chocolateyInstall.ps1" />
+    </files>
+</package>

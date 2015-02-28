@@ -48,6 +48,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="ZetaLongPaths\Native\Enumerations.cs" />
+    <Compile Include="ZetaLongPaths\Native\PInvokeHelper.cs" />
+    <Compile Include="ZetaLongPaths\ZlpDirectoryInfo.cs" />
+    <Compile Include="ZetaLongPaths\ZlpFileInfo.cs" />
+    <Compile Include="ZetaLongPaths\ZlpIOHelper.cs" />
+    <Compile Include="ZetaLongPaths\ZlpPathHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

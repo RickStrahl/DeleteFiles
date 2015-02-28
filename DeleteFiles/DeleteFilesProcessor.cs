@@ -2,6 +2,8 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
 using Microsoft.VisualBasic.FileIO;
 
 namespace DeleteFiles
@@ -56,11 +58,16 @@ namespace DeleteFiles
 
         protected bool ProcessFolder(string activeFolder, DeleteFilesCommandLineParser parser)
         {
-            string[] files;
+            ZetaLongPaths.ZlpFileInfo[] files;
 
             try
             {
-                files = Directory.GetFiles(activeFolder, parser.FileSpec);
+                var folder = new ZetaLongPaths.ZlpDirectoryInfo(activeFolder);
+
+                //var safePath = @"\\?\" + activeFolder;
+                //var shortPath = GetShortPath(activeFolder);
+                //files =  Directory.GetFiles(activeFolder, parser.FileSpec);
+                files = folder.GetFiles(parser.FileSpec);
             }
             catch (Exception e)
             {
@@ -68,26 +75,29 @@ namespace DeleteFiles
                 return false;
             }
             bool success = true;
-            foreach (var file in files)
+            foreach (var fi in files)
             {
-                var fi = new FileInfo(file);
+                //var fi = new FileInfo(file);
+                string file = fi.FullName;
                 if (!fi.Exists)
                     continue;
                 
                 try
                 {
-                    if (IsFileToBeDeleted(file, parser))
+                    if (IsFileToBeDeleted(fi.Name, parser))
                     {
                         if (!parser.DisplayOnly)
                         {
-                            if (parser.UseRecycleBin)
+
+                            
+                            if (parser.UseRecycleBin)                                
                                 FileSystem.DeleteFile(file, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
                             else
-                                File.Delete(file);
+                                fi.Delete(); 
                         }
                         OnShowMessage(Resources.Deleting + file);
                         FileCount++;
-                        FileSizeCount += fi.Length;
+                        FileSizeCount += (long) fi.Length;
                     }
                 }
                 catch
@@ -100,13 +110,16 @@ namespace DeleteFiles
 
             if (parser.Recursive)
             {
-                var dirs = Directory.GetDirectories(activeFolder);
-                foreach (var dir in dirs)
+                var folders = new ZetaLongPaths.ZlpDirectoryInfo(activeFolder);
+                var dirs = folders.GetDirectories();
+                foreach (var directory in dirs)
                 {
+                    string dir = directory.FullName;
+
                     success = ProcessFolder(dir, parser);
                     if (success && parser.RemoveEmptyFolders)
                     {
-                        if (!Directory.GetFiles(dir).Any() && !Directory.GetDirectories(dir).Any())
+                        if (!directory.GetFiles().Any() && !directory.GetDirectories().Any())
                             try
                             {
                                 if (!parser.DisplayOnly)
@@ -115,7 +128,7 @@ namespace DeleteFiles
                                         FileSystem.DeleteDirectory(dir, UIOption.OnlyErrorDialogs,
                                                                     RecycleOption.SendToRecycleBin);
                                     else
-                                        Directory.Delete(dir);
+                                        directory.Delete(false);
                                 }
                                 FolderCount++;
                                 OnShowMessage(Resources.DeletingDirectory + dir);
@@ -176,6 +189,8 @@ namespace DeleteFiles
             else
                 Console.WriteLine(message);
         }
+
+      
     }
 
 }

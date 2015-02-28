@@ -8,7 +8,7 @@ internal class Program
     {
 
         Console.WriteLine("West Wind DeleteFiles Utility\r\n" +
-                            "(c) 2012, West Wind Technologies - www.west-wind.com\r\n");
+                          "(c)  West Wind Technologies - www.west-wind.com\r\n");
 
         if (args == null || args.Length == 0 || args[0] == "HELP" || args[0] == "/?")
         {

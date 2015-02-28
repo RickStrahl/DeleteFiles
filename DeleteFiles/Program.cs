@@ -1,19 +1,22 @@
 ﻿using System;
+using System.Reflection;
 
 namespace DeleteFiles
 {
-internal class Program
-{
-    private static void Main(string[] args)
+    internal class Program
     {
-
-        Console.WriteLine("West Wind DeleteFiles Utility\r\n" +
-                          "(c)  West Wind Technologies - www.west-wind.com\r\n");
-
-        if (args == null || args.Length == 0 || args[0] == "HELP" || args[0] == "/?")
+        private static void Main(string[] args)
         {
-            string options =
-                @"
+            Version v = Assembly.GetExecutingAssembly().GetName().Version;
+            string version = v.Major + "." + v.Minor;
+
+            Console.WriteLine("West Wind DeleteFiles v{0}\r\n" +
+                              "(c) West Wind Technologies - www.west-wind.com\r\n", version);
+
+            if (args == null || args.Length == 0 || args[0] == "HELP" || args[0] == "/?")
+            {
+                string options =
+                    @"
 DeleteFiles <filespec> -r -f -y -l -d10 -s3600
 
 Commands:
@@ -27,10 +30,12 @@ pathSpec    FilePath and File Spec. Make sure to add a filespec
 -f          Remove empty [F]olders
 -y          Delete to Rec[Y]le Bin (can be slow!)
 -l          Disp[L]ays items that would be deleted
+-q0..2      Quiet mode: -q0 - all (default)  -q1 - No file detail
+                        -q2 - No file des, no summary
 -dXX        Number of [D]ays before the current date to delete            
 -sXX        Number of [S]econds before the current time to delete
-        (seconds override days)
-        if neither -d or -s no date filter is applied
+            (seconds override days)
+            if neither -d or -s no date filter is applied (default)
 
 Examples:
 ---------
@@ -42,26 +47,25 @@ DeleteFiles ""c:\My Files\*.*"" -r   - deletes all files in temp folder recursiv
 
 ";
 
-            Console.WriteLine(options);
-            return;
+                Console.WriteLine(options);
+                return;
+            }
 
-        }
+            DeleteFilesCommandLineParser cmdLine = new DeleteFilesCommandLineParser();
+            cmdLine.Parse();
 
-        DeleteFilesCommandLineParser cmdLine = new DeleteFilesCommandLineParser();
-        cmdLine.Parse();
+            if (cmdLine.DisplayOnly)
+                Console.WriteLine(DeleteFiles.Properties.Resources.DisplayOnlyModeNoFilesFoldersAreDeletedRN);
 
-        if (cmdLine.DisplayOnly)
-            Console.WriteLine(DeleteFiles.Properties.Resources.DisplayOnlyModeNoFilesFoldersAreDeletedRN);
+            DeleteFilesProcessor del = new DeleteFilesProcessor(cmdLine);
+            del.ProcessFiles();
 
-        DeleteFilesProcessor del = new DeleteFilesProcessor();
-        del.ProcessFiles(cmdLine);
-            
 
 #if DEBUG
-        Console.WriteLine("Done. Press any key to exit...");
-        Console.ReadKey();
+            Console.WriteLine("Done. Press any key to exit...");
+            Console.ReadKey();
 #endif
+        }
+
     }
-        
-}
 }

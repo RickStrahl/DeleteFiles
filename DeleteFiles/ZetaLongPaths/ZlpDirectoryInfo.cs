@@ -1,11 +1,18 @@
 ﻿namespace ZetaLongPaths
 {
 	using System;
+	using System.Diagnostics;
 	using Native;
 
+    [DebuggerDisplay(@"{FullName}")]
 	public class ZlpDirectoryInfo
 	{
 		private readonly string _path;
+
+        public static ZlpDirectoryInfo GetTemp()
+        {
+            return new ZlpDirectoryInfo(ZlpPathHelper.GetTempDirectoryPath());
+        }
 
 		public ZlpDirectoryInfo(string path)
 		{
@@ -20,6 +27,11 @@
 		{
 			get { return ZlpIOHelper.DirectoryExists(_path); }
 		}
+
+        public void MoveToRecycleBin()
+        {
+            ZlpIOHelper.MoveDirectoryToRecycleBin(_path);
+        }
 
 		public string OriginalPath
 		{
@@ -41,7 +53,17 @@
 			ZlpIOHelper.CreateDirectory(_path);
 		}
 
-		public string FullName
+        public void MoveTo(string destinationDirectoryPath)
+        {
+            ZlpIOHelper.MoveDirectory(_path, destinationDirectoryPath);
+        }
+
+        public void MoveTo(ZlpDirectoryInfo destinationDirectoryPath)
+        {
+            ZlpIOHelper.MoveDirectory(_path, destinationDirectoryPath.FullName);
+        }
+
+        public string FullName
 		{
 			get { return _path; }
 		}
@@ -80,6 +102,13 @@
 		{
 			return ZlpIOHelper.GetDirectories(_path, pattern);
 		}
+
+        public ZlpDirectoryInfo CreateSubdirectory(string name)
+        {
+            var path = ZlpPathHelper.Combine(_path, name);
+            ZlpIOHelper.CreateDirectory(path);
+            return new ZlpDirectoryInfo(path);
+        }
 
 		public ZlpDirectoryInfo Parent
 		{

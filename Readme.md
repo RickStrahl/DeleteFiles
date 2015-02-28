@@ -1,47 +1,51 @@
 # West Wind DeleteFiles
-**A small, recursive Windows Console File Delete Utility**
+**Windows utility to delete files recursively, optionally based on a time offset with support for deep file nesting**
 
 This small Console utility deletes files recursively and allows filtering files by date.
 
-* Allows for a filespecs in the form of c:\temp\*.*
-* Can recursive delete files and optionally delete empty folders
-* Date filtering based on days or seconds before current time
-* Files can be optionally dumped into the Recycle Bin
-* Works on deeply nested paths working around Windows MAX_PATH limitations
+* Delete files with simple file specs like `c:\temp\*.*`
+* Recursively delete files and empty folders
+* Filter by files to delete based on days or seconds before current time
+* Files can be optionally dumped into the Recycle Bin for recoverable deletes
+* Works with deeply nested folder hierarchies (like NPM folders)
+* Works a round Windows MAX_PATH limitations
 
-## Usage Options
+## Usage
 Command Line Options:
-	DeleteFiles <filespec>
-    -r -f -l -y -d10 -s3600
 
-    Commands:
-    ---------
-    HELP || /?  This help display
+```
+DeleteFiles <filespec> -r -f -y -l -d10 -s3600
 
-    Options:
-    --------
-    pathSpec    Path and File Spec. Make sure to add a filespec
-    Example: c:\temp\*.*
-    (use quotes around paths that contain spaces)
-    -r          Delete files [R]ecursively
-    -f          Remove empty [F]olders
-    -l          Disp[L]ay items that would be deleted
-    -y          Delete to Rec[Y]le Bin (can be slow!)
-    -dXX        Number of [D]ays before the current date to delete
-    -sXX        Number of [S]econds before the current time to delete
-    (seconds override days - if neither: no date filter)
+Commands:
+---------
+HELP || /?      This help display           
 
-    Examples:
-    ---------
-    DeleteFiles c:\temp\*.* -r -f      - deletes all files in temp folder recursively
-    DeleteFiles c:\temp\*.* -r -d10    - delete files 10 days or older
-    DeleteFiles c:\temp\*.* -r -s3600  - delete files older than an hour
-    DeleteFiles "c:\My Files\*.*" -r   - deletes all files in temp folder recursively
+Options:
+--------
+pathSpec    FilePath and File Spec. Make sure to add a filespec
+-r          Delete files [R]ecursively     
+-f          Remove empty [F]olders
+-y          Delete to Rec[Y]le Bin (can be slow!)
+-l          Disp[L]ays items that would be deleted
+-q0..2      Quiet mode: -q0 - all (default)  -q1 - No file detail
+                        -q2 - No file des, no summary
+-dXX        Number of [D]ays before the current date to delete            
+-sXX        Number of [S]econds before the current time to delete
+            (seconds override days)
+            if neither -d or -s no date filter is applied (default)
+
+Examples:
+---------
+DeleteFiles c:\temp\*.* -r -f        - deletes all files in temp folder recursively 
+                                       and deletes empty folders
+DeleteFiles c:\temp\*.* -r -f -d10   - delete files 10 days or older 
+DeleteFiles c:\temp\*.* -r -f -s3600 - delete files older than an hour
+DeleteFiles ""c:\My Files\*.*"" -r   - deletes all files in temp folder recursively
+```
 
 
 ## Requirements
-* [Requires the .NET Framework 4.0]
-* (http://www.microsoft.com/en-us/download/details.aspx?id=17851)
+* [Requires the .NET Framework 4.0](http://www.microsoft.com/en-us/download/details.aspx?id=17851)
 
 ## Acknowledgement
 * Uses [ZetaLongPath](http://zetalongpaths.codeplex.com) by Zeta GMBH for long path deletion
@@ -73,4 +77,19 @@ INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PA
 NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
 DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+### History
+
+##### Version 1.10
+*Feb. 28th, 2015*
+
+* **Support for paths longer than MAX_PATH**<br/>
+You can now delete deeply nested paths (such as nasty NPM hierarchies). Integrated with [ZetaLongPaths](https://github.com/UweKeim/ZetaLongPaths/) to provide long path support on all directory and file delete operations.
+
+* **Delete ReadOnly, System and Hidden Files**<br/>
+Previously read-only files wouldn't delete. This updates now deletes any kind of file regardless of attribute settings. Locked and access denied files still will not work, but everything else will delete.
+
+* **Quiet Mode**<br/>
+Add -q0..2 switch to allow quiet operation that runs without showing every file and folder deleted. -q0 shows all - q1 only shows summary, -q2 shows only startup banner.
+
 

@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -31,6 +32,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
@@ -40,6 +42,17 @@
     <Compile Include="CommandLineParser.cs" />
     <Compile Include="DeleteFilesProcessor.cs" />
     <Compile Include="DeleteFilesCommandLineParser.cs" />
+    <Compile Include="LongPath\Common.cs" />
+    <Compile Include="LongPath\Directory.cs" />
+    <Compile Include="LongPath\DirectoryInfo.cs" />
+    <Compile Include="LongPath\File.cs" />
+    <Compile Include="LongPath\FileInfo.cs" />
+    <Compile Include="LongPath\FileSystemInfo.cs" />
+    <Compile Include="LongPath\NativeMethods.cs" />
+    <Compile Include="LongPath\Path.cs" />
+    <Compile Include="LongPath\Priviledge.cs" />
+    <Compile Include="LongPath\SafeFindHandle.cs" />
+    <Compile Include="LongPath\SafeTokenHandle.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -79,6 +92,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="LongPath\Pri.LongPath.csproj" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

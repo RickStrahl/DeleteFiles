@@ -1,14 +1,16 @@
 # West Wind DeleteFiles
-**Windows utility to delete files recursively, optionally based on a time offset with support for deep file nesting**
+**Windows utility to delete files and folders recursively, optionally based on a time offset with support for deep file nesting**
 
-This small Console utility deletes files recursively and allows filtering files by date.
+This small Console utility deletes files and folders recursively and allows filtering files by date.
 
 * Delete files with simple file specs like `c:\temp\*.*`
-* Recursively delete files and empty folders
-* Filter by files to delete based on days or seconds before current time
-* Files can be optionally dumped into the Recycle Bin for recoverable deletes
+* Recursively delete files down the folder hierarchy (-r switch)
+* Optionally delete empty folders (-f switch)
+* Filter by files to delete based on days or seconds before current time (-d -s)
+* Files can be optionally dumped into the Recycle Bin for recoverable deletes (-y)
 * Works with deeply nested folder hierarchies (like NPM folders)
 * Works a round Windows MAX_PATH limitations
+* Portable, single-file EXE file
 
 ## Usage
 Command Line Options:
@@ -26,9 +28,9 @@ pathSpec    FilePath and File Spec. Make sure to add a filespec
 -r          Delete files [R]ecursively     
 -f          Remove empty [F]olders
 -y          Delete to Rec[Y]le Bin (can be slow!)
--l          Disp[L]ays items that would be deleted
+-l          Trial run - [L]ists items that would be deleted
 -q0..2      Quiet mode: -q0 - all (default)  -q1 - No file detail
-                        -q2 - No file des, no summary
+                        -q2 - No file detail, no summary
 -dXX        Number of [D]ays before the current date to delete            
 -sXX        Number of [S]econds before the current time to delete
             (seconds override days)

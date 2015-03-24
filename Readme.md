@@ -1,5 +1,5 @@
 # West Wind DeleteFiles
-<img src="https://raw.githubusercontent.com/RickStrahl/DeleteFiles/master/DeleteFiles.png" align="left" />
+<img src="https://raw.githubusercontent.com/RickStrahl/DeleteFiles/master/DeleteFiles.png" align="left" width="90" padr="10" />
 
 **Windows utility to delete files and folders recursively with support for deep file nesting and optional time offset filtering**
 

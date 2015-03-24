@@ -50,10 +50,12 @@ namespace DeleteFiles
                     string size;
                     if (FileSizeCount < 1000)
                         size = FileSizeCount.ToString("N0") + " bytes";
+                    else if (FileSizeCount < 15000)
+                        size = (FileSizeCount / 1000).ToString("N2") + "kb";
                     else if (FileSizeCount < 1000000)
-                        size = (FileSizeCount/1000).ToString("N2") + "kb";
+                        size = (FileSizeCount/1000).ToString("N0") + "kb";
                     else
-                        size = ((decimal) FileSizeCount/1000000M).ToString("N2") + "mb";
+                        size = ((decimal) FileSizeCount/1000000M).ToString("N1") + "mb";
 
                     OnShowMessage(string.Format("  {0} files and {1} deleted.", FileCount, size));
                 }

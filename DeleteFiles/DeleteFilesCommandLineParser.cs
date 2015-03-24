@@ -29,8 +29,18 @@ namespace DeleteFiles
         {
             // first argument is path
             FullPath = Args[0];
+
+
             if (!string.IsNullOrEmpty(FullPath))
             {
+                // normalize path
+                FullPath = FullPath.Replace("/", "\\");
+                if (!FullPath.Contains(":") || !FullPath.StartsWith("\\"))
+                {
+                    if (!FullPath.StartsWith("\\"))
+                        FullPath = Path.Combine(Environment.CurrentDirectory,FullPath);
+                }
+                
                 FilePath = Path.GetDirectoryName(FullPath);
                 FilePath = Path.GetFullPath(FilePath);
                 FileSpec = Path.GetFileName(FullPath);

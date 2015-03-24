@@ -8,7 +8,7 @@ This small Console utility deletes files and folders recursively and allows filt
 * Optionally delete empty folders (-f switch)
 * Filter by files to delete based on days or seconds before current time (-d -s)
 * Files can be optionally dumped into the Recycle Bin for recoverable deletes (-y)
-* Preview liar mode lets you test run to see what would get deleted (-l)
+* Preview mode lets you test run to see what would get deleted (-l)
 * Works with deeply nested folder hierarchies (like NPM folders)
 * Works around Windows MAX_PATH limitations
 * Portable, single-file EXE file

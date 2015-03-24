@@ -13,6 +13,12 @@ This small Console utility deletes files and folders recursively and allows filt
 * Works around Windows MAX_PATH limitations
 * Portable, single-file EXE file
 
+## Get it
+To get the DeleteFiles executable you can use:
+
+* [West Wind DeleteFiles Chocolatey Package](https://chocolatey.org/packages/DeleteFiles)
+* [Binaries from GitHub Distribution](https://github.com/RickStrahl/DeleteFiles/tree/master/Distribution)
+
 ## Usage
 Command Line Options:
 
@@ -51,7 +57,7 @@ DeleteFiles c:\temp\*.* -r -f -s3600 - delete files older than an hour
 ## Requirements
 * [Requires the .NET Framework 4.0](http://www.microsoft.com/en-us/download/details.aspx?id=17851)
 
-## Acknowledgement
+## Acknowledgements
 * Uses [ZetaLongPath](http://zetalongpaths.codeplex.com) by Zeta GMBH for long path deletion
 
 ## License

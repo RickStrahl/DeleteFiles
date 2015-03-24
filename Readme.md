@@ -1,7 +1,8 @@
 # West Wind DeleteFiles
+<img src="https://raw.githubusercontent.com/RickStrahl/DeleteFiles/master/DeleteFiles.png" align="left" />
+
 **Windows utility to delete files and folders recursively with support for deep file nesting and optional time offset filtering**
 
-<img src="https://raw.githubusercontent.com/RickStrahl/DeleteFiles/master/DeleteFiles.png" align="left" />
 This small Console utility deletes files and folders recursively and allows filtering files by date.
 
 * Delete files with simple file specs like `c:\temp\*.*` or `*.tmp`

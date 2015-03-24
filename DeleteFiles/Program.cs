@@ -30,7 +30,7 @@ pathSpec    FilePath and File Spec. Make sure to add a filespec
 -y          Delete to Rec[Y]le Bin (can be slow!)
 -l          Disp[L]ays items that would be deleted
 -q0..2      Quiet mode: -q0 - all (default)  -q1 - No file detail
-                        -q2 - No file des, no summary
+                        -q2 - No file detail, no summary
 -dXX        Number of [D]ays before the current date to delete            
 -sXX        Number of [S]econds before the current time to delete
             (seconds override days)

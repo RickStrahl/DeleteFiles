@@ -21,6 +21,9 @@ To get the DeleteFiles executable you can use:
 * [West Wind DeleteFiles Chocolatey Package](https://chocolatey.org/packages/DeleteFiles)
 * [Binaries from GitHub Distribution](https://github.com/RickStrahl/DeleteFiles/tree/master/Distribution)
 
+## Use Case
+DeleteFiles is useful for common directory cleanup tasks, such as cleaning out temp folders, log files and so. The timed features are especially useful for clearing out log directories, clearing files that are older than a cut-off date for example. DeleteFiles is also useful for deleting deeply nested folder hierarchies that can't be deleted in Windows Explorer or other standard file utilities due to path lengths exceeding Windows default path length limitations (MAX_PATH). DeleteFiles can easily delete long paths as well as read-only, system and hidden files.
+
 ## Usage
 Command Line Options:
 

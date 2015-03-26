@@ -22,7 +22,11 @@ To get the DeleteFiles executable you can use:
 * [Binaries from GitHub Distribution](https://github.com/RickStrahl/DeleteFiles/tree/master/Distribution)
 
 ## Use Case
-DeleteFiles is useful for common directory cleanup tasks, such as cleaning out temp folders, log files and so. The timed features are especially useful for clearing out log directories, clearing files that are older than a cut-off date for example. DeleteFiles is also useful for deleting deeply nested folder hierarchies that can't be deleted in Windows Explorer or other standard file utilities due to path lengths exceeding Windows default path length limitations (MAX_PATH). DeleteFiles can easily delete long paths as well as read-only, system and hidden files.
+DeleteFiles is useful for common directory cleanup tasks, such as cleaning out temp folders, or log files and so on. The timed features are especially useful for clearing out log directories, clearing files that are older than a cut-off date for example.  
+
+DeleteFiles is also useful for deleting deeply nested folder hierarchies that can't be deleted in Windows Explorer or other standard file utilities due to path lengths exceeding Windows default limitations (MAX_PATH). DeleteFiles can easily delete long paths as well as read-only, system and hidden files.
+
+Because DeleteFiles is a small self-contained, single Exe it's easy to install and access it and use it for admin tasks in server batch/script files. Personally I use a number of DeleteFiles operations of scheduled tasks to manage database log cleanup (toss all logs older than 10 days), clean out all system temp folders, and scour the entire system for known temp files. 
 
 ## Usage
 Command Line Options:

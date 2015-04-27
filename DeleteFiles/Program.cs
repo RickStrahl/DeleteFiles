@@ -26,7 +26,7 @@ Options:
 --------
 pathSpec    FilePath and File Spec. Make sure to add a filespec
 -r          Delete files [R]ecursively     
--f          Remove empty [F]olders
+-f          Remove empty [F]olders (start folder is not deleted)
 -y          Delete to Rec[Y]le Bin (can be slow!)
 -l          Disp[L]ays items that would be deleted
 -q0..2      Quiet mode: -q0 - all (default)  -q1 - No file detail
@@ -40,11 +40,11 @@ Examples:
 ---------
 DeleteFiles c:\temp\*.* -r -f        - deletes all files in temp folder recursively 
                                        and deletes empty folders
-DeleteFiles *.tmp -r                 - delete .tmp files recursively
+DeleteFiles *.tmp -r                 - delete .tmp files recursively from current folder down
 DeleteFiles ""c:\My Files\*.*"" -r   - deletes all files leaves folders
 DeleteFiles c:\temp\*.* -r -f -d10   - delete files 10 days or older 
 DeleteFiles c:\temp\*.* -r -f -s3600 - delete files older than an hour
-
+DeleteFiles c:\thumbs.db -r          - delete thumbs.db files on entire drive
 
 ";
 

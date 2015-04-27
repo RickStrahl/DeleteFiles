@@ -56,10 +56,11 @@ Examples:
 ---------
 DeleteFiles c:\temp\*.* -r -f        - deletes all files in temp folder recursively 
                                        and deletes empty folders
-DeleteFiles *.tmp -r                 - delete .tmp files recursively
+DeleteFiles *.tmp -r                 - delete .tmp files recursively from current fodler down
 DeleteFiles ""c:\My Files\*.*"" -r   - deletes all files leaves folders
 DeleteFiles c:\temp\*.* -r -f -d10   - delete files 10 days or older 
 DeleteFiles c:\temp\*.* -r -f -s3600 - delete files older than an hour
+DeleteFiles c:\thumbs.db -r          - delete thumbs.db on entire drive
 ```
 
 

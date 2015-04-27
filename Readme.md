@@ -22,7 +22,7 @@ To get the DeleteFiles executable you can use:
 * [Binaries from GitHub Distribution](https://github.com/RickStrahl/DeleteFiles/tree/master/Distribution)
 
 ## Use Case
-DeleteFiles is useful for common directory cleanup tasks, such as cleaning out temp folders, or log files and so on. The timed features are especially useful for clearing out log directories, clearing files that are older than a cut-off date for example.  
+DeleteFiles is useful for common directory cleanup tasks, such as cleaning out temp folders, or log or backup files and so on. The timed features are especially useful for clearing out log and backup directories of dated files that are older than a specified number of days.  
 
 DeleteFiles is also useful for deleting deeply nested folder hierarchies that can't be deleted in Windows Explorer or other standard file utilities due to path lengths exceeding Windows default limitations (MAX_PATH). DeleteFiles can easily delete long paths as well as read-only, system and hidden files.
 
@@ -65,7 +65,7 @@ DeleteFiles c:\thumbs.db -r          - delete thumbs.db on entire drive
 
 
 ## Requirements
-* [Requires the .NET Framework 4.0](http://www.microsoft.com/en-us/download/details.aspx?id=17851)
+* [Requires the .NET Framework 4.0 or later](http://www.microsoft.com/en-us/download/details.aspx?id=17851)
 
 ## Acknowledgements
 * Uses [ZetaLongPath](http://zetalongpaths.codeplex.com) by Zeta GMBH for long path deletion
@@ -100,8 +100,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SO
 
 ### History
 
+##### Version 1.14
+*April 25th, 2015*
+
+* **Fix Regression Bug with -d Switch**
+Fixed issue where the -d switch was not properly filtering out files that were newer than the deletion date when running DeleteFiles with relative paths. Fixed up paths to properly use full file names rather than relative paths when checking for file status. 
+
 ##### Version 1.12
-*Mar. 25th, 2015*
+*March 25th, 2015*
 
 * **Fix current Path Operation**<br/>
 Fixed issue when running without an absolute path out of the current folder so that wildcards `*.tmp` and relative paths `temp\*.tmp` work out of the current folder.
@@ -110,7 +116,7 @@ Fixed issue when running without an absolute path out of the current folder so t
 Cleanup the output display messages with cleaner numbers to summarize results.
 
 ##### Version 1.11
-*Feb. 28th, 2015*
+*February 28th, 2015*
 
 * **Support for paths longer than MAX_PATH**<br/>
 You can now delete deeply nested paths (such as nasty NPM hierarchies). Integrated with [ZetaLongPaths](https://github.com/UweKeim/ZetaLongPaths/) to provide long path support on all directory and file delete operations.

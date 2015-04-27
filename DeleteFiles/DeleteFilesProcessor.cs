@@ -211,6 +211,7 @@ namespace DeleteFiles
                 var ftime = File.GetLastWriteTime(file);
                 if (DateTime.Now.Date >= ftime.Date.AddDays(Parser.Days))
                     return true;
+                return false;
             }
 
             // if neither days or seconds were provided delete all files

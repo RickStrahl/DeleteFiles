@@ -92,7 +92,7 @@ namespace DeleteFiles
                 
                 try
                 {
-                    if (IsFileToBeDeleted(fi.Name))
+                    if (IsFileToBeDeleted(fi.FullName))
                     {
                         long fsize = fi.Length;
 
@@ -201,6 +201,7 @@ namespace DeleteFiles
             if (Parser.Seconds > -1)
             {
                 var ftime = File.GetLastWriteTimeUtc(file);
+                
                 if (DateTime.UtcNow > ftime.AddSeconds(Parser.Seconds))
                     return true;
                 return false;
